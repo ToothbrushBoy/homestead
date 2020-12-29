@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->String('postContent');
             $table->timestamps();
 
+            $table->foriegnId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

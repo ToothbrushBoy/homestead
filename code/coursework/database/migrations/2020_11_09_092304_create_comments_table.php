@@ -20,6 +20,7 @@ class CreateCommentsTable extends Migration
             $table->timestamps();
             
             $table->foriegnId('post_id')->constrained('posts')->onDelete('cascade')->onUpdate('cascade');
+            $table->foriegnId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
