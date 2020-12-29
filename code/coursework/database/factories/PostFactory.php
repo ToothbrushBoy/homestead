@@ -23,8 +23,8 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => $this->faker->numberBetween(1,10),
-            'postTitle' => $this->faker->reaLText($maxNbChars = 20, $indexSize = 2),
-            'postContent' => $this->faker->reaLText($maxNbChars = 200, $indexSize = 2),
+            'postTitle' => $this->faker->realText($maxNbChars = 40, $indexSize = 2),
+            'postContent' => $this->faker->realText($maxNbChars = 256, $indexSize = 2),
         ];
     }
 }
