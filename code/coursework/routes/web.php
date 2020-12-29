@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,6 @@ Route::get('/home', function () {
     return view('forum.home');
 });
 
-Route::get('/posts', 'PostController@showPosts');
+Route::get('/posts', [PostController::class, 'listPosts']) -> name('Posts.List');
 
-Route::get('/posts/{post}', 'PostController@showPost');
+Route::get('/posts/{post}', [PostController::class, 'showPost']) -> name('Posts.Show');
