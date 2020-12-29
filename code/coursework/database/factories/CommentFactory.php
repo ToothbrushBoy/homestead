@@ -23,8 +23,9 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'userID' => $faker->numberBetween(100000,999999),
-            'content' => "Generic comment contect", 'postID' => $faker->numberBetween(0,9);
+            'user_id' => $this->faker->numberBetween(1,10),
+            'post_id' => $this->faker->numberBetween(1,10),
+            'content' => $this->faker->reaLText($maxNbChars = 200, $indexSize = 2)
         ];
     }
 }

@@ -22,7 +22,9 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'postContent' => "generic post content"
+            'user_id' => $this->faker->numberBetween(1,10),
+            'postTitle' => $this->faker->reaLText($maxNbChars = 20, $indexSize = 2),
+            'postContent' => $this->faker->reaLText($maxNbChars = 200, $indexSize = 2),
         ];
     }
 }
