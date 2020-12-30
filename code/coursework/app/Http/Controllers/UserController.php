@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Post;
 
-class PostController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -81,14 +80,5 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function listPosts(){
-        return view('forum.list');
-    }
-
-    public function showPost(Post $post){
-        //$post = Post::findOrFail($id)
-        return view('forum.post', ['post' => $post]);
     }
 }
