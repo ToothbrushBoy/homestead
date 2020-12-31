@@ -81,4 +81,12 @@ class UserController extends Controller
     {
         //
     }
+
+    public function listUsers(){
+        
+    }
+
+    public funtion showUser($id){
+
+    }
 }

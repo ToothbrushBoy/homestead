@@ -84,11 +84,12 @@ class PostController extends Controller
     }
 
     public function listPosts(){
-        return view('forum.list');
+        $posts = Post::all();
+        return view('forum.postList', ['posts' => $posts]);
     }
 
-    public function showPost(Post $post){
-        //$post = Post::findOrFail($id)
+    public function showPost($id){
+        $post = Post::findOrFail($id);
         return view('forum.post', ['post' => $post]);
     }
 }
