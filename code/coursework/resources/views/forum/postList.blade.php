@@ -17,18 +17,23 @@
             <li> <a href="{{route('Posts.Show', $post->id)}}">{{ $post->postTitle }}</a></li>
         @endforeach
     </ul>
-    
 
-    <script>
-        var app = new Vue({
-            el: "#postList",
+@endsection
+
+@section('script')
+
+<script>
+    var postListVue = new Vue({
+        el: "#postList",
+        data: {
             posts: {},
-            mounted(){
-                axios.get("{{ route('api.posts.index')}}")
-                .then( response => {this.enclosures = response.data;})
-                .catch( response=>{console.log(response);})
-            }
-        });
-    </script>
+        },
+        mounted(){
+            axios.get("{{ route('api.posts.index')}}")
+            .then( response => {this.enclosures = response.data;})
+            .catch( response => {console.log(response);})
+        }
+    });
+</script>
 
 @endsection
