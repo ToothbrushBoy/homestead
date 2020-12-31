@@ -83,10 +83,16 @@ class UserController extends Controller
     }
 
     public function listUsers(){
-        
+        $users = User::all();
+        return view('forum.userList', ['users' => $users]);
     }
 
     public funtion showUser($id){
 
+    }
+
+    public function apiListUsers(){
+        $posts = Post::all();
+        return $posts;
     }
 }

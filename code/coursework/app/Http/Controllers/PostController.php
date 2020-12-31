@@ -92,4 +92,9 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         return view('forum.post', ['post' => $post]);
     }
+
+    public function apiListPosts(){
+        $posts = Post::all();
+        return $posts;
+    }
 }
