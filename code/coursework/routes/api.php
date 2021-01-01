@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('posts', [PostController::class, 'apiListPosts'])->name('api.posts.index');
+
+Route::get('/comments/{post}', [CommentController::class, 'apiComments'])->name('api.comments.list');

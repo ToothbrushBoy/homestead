@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Post;
+use App\Models\Comment;
+use App\Models\User;
 
-class PostController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -83,18 +84,11 @@ class PostController extends Controller
         //
     }
 
-    public function listPosts(){
-        $posts = Post::all();
-        return view('forum.postList', ['posts' => $posts]);
-    }
-
-    public function showPost($id){
-        $post = Post::findOrFail($id);
-        return view('forum.post', ['post' => $post], []);
-    }
-
-    public function apiListPosts(){
-        $posts = Post::all();
-        return $posts;
+    public function apiComments($post){
+        $comments = Comment::all()->where('post_id', '=', $post);
+        foreach($comments as $comment){
+            $comment->userName=$comment->User->name;
+        }
+        return $comments;
     }
 }

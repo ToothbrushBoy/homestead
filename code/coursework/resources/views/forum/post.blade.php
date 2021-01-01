@@ -30,20 +30,30 @@
 
     <div>{{ $post->postContent }}</div>
 
+    <div>Comments</div>
+
+    <div id="comments">
+        <ul style="list-style-type:none;">
+            <li v-for="comment in comments">
+                <p>@{{ comment.content }}</p>
+                <p>@{{ comment.userName }} at @{{ comment.created_at }}</p>
+            </li>
+        </ul>
+    </div>
 @endsection
 
 @section('script')
 
 <script>
-    var postListVue = new Vue({
-        el: "#postList",
+    var commentsVue = new Vue({
+        el: "#comments",
         data: {
-            posts: [],
+            comments: [],
         },
         mounted(){
-            axios.get("{{ route('api.posts.index') }}")
+            axios.get("{{ route('api.comments.list', $post->id) }}")
             .then( response => {
-                this.posts = response.data;
+                this.comments = response.data;
             })
             .catch( response => {
                 console.log(response);
