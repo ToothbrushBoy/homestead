@@ -25,6 +25,7 @@ class PostFactory extends Factory
             'user_id' => $this->faker->numberBetween(1,10),
             'postTitle' => $this->faker->realText($maxNbChars = 40, $indexSize = 2),
             'postContent' => $this->faker->realText($maxNbChars = 256, $indexSize = 2),
+            'score' => $this->faker->numberBetween(1,10),
         ];
     }
 }

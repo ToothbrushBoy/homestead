@@ -30,7 +30,9 @@
 
     <div>{{ $post->postContent }}</div>
 
-    <div>Comments</div>
+    <p>
+    <h3>Comments</h3>
+    <p>
 
     <div id="comments">
         <ul style="list-style-type:none;">

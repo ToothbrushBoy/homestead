@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->String('postTitle');
             $table->String('postContent');
+            $table->integer('score');
             $table->timestamps();
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');

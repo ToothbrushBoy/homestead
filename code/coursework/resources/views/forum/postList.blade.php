@@ -2,6 +2,8 @@
 
 @section('header')
 
+    <h3><a >Create post</a></h3>
+
     <h1>All posts</h1>
 
 @endsection

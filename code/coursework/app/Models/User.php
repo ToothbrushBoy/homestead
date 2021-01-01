@@ -41,6 +41,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $attributes = [ 'admin' => '0', ];
+
     public function posts()
     {
         return $this->hasMany('App\Models\Post');
