@@ -9,14 +9,10 @@
 @section('content')
 
     <div id="postList">
-        <p>@{{ posts }}</p>
+        <ul style="list-style-type:none;">
+            <li v-for="post in posts"><a v-bind:href="'/posts/' + post.id">@{{ post.postTitle }}</a></li>
+        </ul>
     </div>
-
-    <ul style="list-style-type:none;">
-        @foreach ($posts as $post)
-            <li> <a href="{{route('Posts.Show', $post->id)}}">{{ $post->postTitle }}</a></li>
-        @endforeach
-    </ul>
 
 @endsection
 
@@ -26,13 +22,17 @@
     var postListVue = new Vue({
         el: "#postList",
         data: {
-            posts: {},
+            posts: [],
         },
         mounted(){
-            axios.get("{{ route('api.posts.index')}}")
-            .then( response => {this.enclosures = response.data;})
-            .catch( response => {console.log(response);})
-        }
+            axios.get("{{ route('api.posts.index') }}")
+            .then( response => {
+                this.posts = response.data;
+            })
+            .catch( response => {
+                console.log(response);
+            })
+        },
     });
 </script>
 

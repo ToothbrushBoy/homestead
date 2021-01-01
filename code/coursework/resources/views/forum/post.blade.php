@@ -28,6 +28,28 @@
 
 @section('content')
 
-    <p>{{ $post->postContent }}</p>
+    <div>{{ $post->postContent }}</div>
+
+@endsection
+
+@section('script')
+
+<script>
+    var postListVue = new Vue({
+        el: "#postList",
+        data: {
+            posts: [],
+        },
+        mounted(){
+            axios.get("{{ route('api.posts.index') }}")
+            .then( response => {
+                this.posts = response.data;
+            })
+            .catch( response => {
+                console.log(response);
+            })
+        },
+    });
+</script>
 
 @endsection
