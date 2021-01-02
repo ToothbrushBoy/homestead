@@ -82,6 +82,8 @@ class PostController extends Controller
 
     public function apiStore(Request $request){
 
+        return $request;
+
         $validator = Validator::make($request->all(), [
             'postTitle' => 'required|max:40',
             'postContent' => 'required|max:256',

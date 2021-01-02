@@ -30,6 +30,9 @@
     </div>
     <div v-else><button disabled>Post</button></div>
 
+    <div>
+        @{{ newPostTitle }}
+    </div>
 </div>
 
 @endsection
@@ -43,7 +46,7 @@
             posts: [],
             newPostTitle: '',
             newPostScore: '',
-            newPostContent: '',
+            newPostContent: ''
         },
         methods: {
             makePost: function(){
@@ -51,13 +54,16 @@
                 axios.post("{{ route('api.posts.store') }}", {
                     postTitle: this.newPostTitle,
                     score: this.newPostScore,
-                    postContent: this.newPostContent,
+                    postContent: this.newPostContent
                 })
                 .then(response =>  {
-                    
+                    console.log(response);
+                    console.log("then");
+
                 })
                 .catch(response => {
                     console.log(response);
+                    console.log("catch");
                     console.log(this.newPostTitle);
                     console.log(this.newPostContent);
                     console.log(this.newPostScore);
