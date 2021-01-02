@@ -81,11 +81,23 @@ class PostController extends Controller
     }
 
     public function apiStore(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'postTitle' => 'required|max:40',
+            'postContent' => 'required|max:256',
+            'score' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors'=>$validator->errors()],422);
+        }
+
         $p = new Post;
         $p->postTitle = $request['postTitle'];
         $p->postContent = $request['postContent'];
         $p->score = $request['score'];
-        $p->user_id = $request['user_id'];
+        $p->user_id = Auth::user()->id;
+
+        $p->save();
 
         return $p;
     }
