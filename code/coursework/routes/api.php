@@ -23,3 +23,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('posts', [PostController::class, 'apiListPosts'])->name('api.posts.index');
 
 Route::get('/comments/{post}', [CommentController::class, 'apiComments'])->name('api.comments.list');
+
+Route::post('posts', [PostController::class, 'apiStore'])->name('api.posts.store');

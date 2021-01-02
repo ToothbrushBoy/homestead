@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -15,7 +16,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('forum.createPost');
+        $user = Auth::user();
+        return view('forum.createPost', ['user' => $user ]);
     }
 
     /**
@@ -70,11 +72,21 @@ class PostController extends Controller
 
     public function showPost($id){
         $post = Post::findOrFail($id);
-        return view('forum.post', ['post' => $post], []);
+        return view('forum.post', ['post' => $post]);
     }
 
     public function apiListPosts(){
         $posts = Post::all();
         return $posts;
+    }
+
+    public function apiStore(Request $request){
+        $p = new Post;
+        $p->postTitle = $request['postTitle'];
+        $p->postContent = $request['postContent'];
+        $p->score = $request['score'];
+        $p->user_id = $request['user_id'];
+
+        return $p;
     }
 }
