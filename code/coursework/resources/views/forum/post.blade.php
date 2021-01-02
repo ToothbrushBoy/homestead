@@ -8,6 +8,17 @@
 
 @section('updated', $post->updated_at)
 
+@section('commentBox')
+
+<input v-model="newCommentContent" placeholder="Comment" max="255">
+
+<div v-if="newCommentContent.length >= 1 && newCommentContent.length <= 255">
+    <button @click="makeComment">Post</button>
+</div>
+<div v-else><button disabled>Post</button></div>
+
+@endsection
+
 @section('timeText')
 
     @if ($post->created_at == $post->updated_at)
@@ -30,13 +41,18 @@
 
     <div>{{ $post->postContent }}</div>
 
-    <p>
-    <h3>Comments</h3>
-    <p>
 
-    <div id="comments">
+    <div id="root">
+
+        <p></p>
+        @yield('commentBox')
+
+        <p>
+            <h3>Comments</h3>
+        <p>
+
         <ul style="list-style-type:none;">
-            <li v-for="comment in comments">
+            <li v-for="comment in commentsData">
                 <p>@{{ comment.content }}</p>
                 <p>@{{ comment.userName }} at @{{ comment.created_at }}</p>
             </li>
@@ -48,14 +64,42 @@
 
 <script>
     var commentsVue = new Vue({
-        el: "#comments",
+        el: "#root",
         data: {
-            comments: [],
+            commentsData: [],
+            newCommentContent: '',
+            newCommentCommentableId: {{ $post->id }},
+            newCommentUser: {{ $currentUser->id }},
+            userName: "{{ $currentUser->name }}",
+        },
+        methods: {
+            makeComment: function(){
+
+                axios.post("{{ route('api.comments.store') }}", {
+                    content: this.newCommentContent,
+                    post_id: this.newCommentCommentableId,
+                    user_id: this.newCommentUser,
+                })
+                .then(response =>  {
+                    axios.get("{{ route('api.comments.list', $post->id) }}")
+                    .then( response => {
+                        this.commentsData = response.data;
+                        this.newCommentContent = '';
+                    })
+                    .catch( response => {
+                        console.log(response);
+                    })
+                })
+                .catch(response => {
+                    console.log(response);
+                })
+
+            }
         },
         mounted(){
             axios.get("{{ route('api.comments.list', $post->id) }}")
             .then( response => {
-                this.comments = response.data;
+                this.commentsData = response.data;
             })
             .catch( response => {
                 console.log(response);

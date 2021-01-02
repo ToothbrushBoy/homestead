@@ -72,7 +72,7 @@ class PostController extends Controller
 
     public function showPost($id){
         $post = Post::findOrFail($id);
-        return view('forum.post', ['post' => $post]);
+        return view('forum.post', ['post' => $post, 'currentUser' => Auth::user()]);
     }
 
     public function apiListPosts(){
@@ -82,22 +82,18 @@ class PostController extends Controller
 
     public function apiStore(Request $request){
 
-        return $request;
-
-        $validator = Validator::make($request->all(), [
-            'postTitle' => 'required|max:40',
-            'postContent' => 'required|max:256',
-            'score' => 'required'
+        $validated = $request->validate([
+            'postTitle' => 'required|min:4|max:40|string',
+            'postContent' => 'required|max:255|string',
+            'score' => 'required|min:1|max:10|integer',
+            'user_id' => 'required|integer'
         ]);
-        if ($validator->fails()) {
-            return response()->json(['errors'=>$validator->errors()],422);
-        }
 
         $p = new Post;
         $p->postTitle = $request['postTitle'];
         $p->postContent = $request['postContent'];
         $p->score = $request['score'];
-        $p->user_id = Auth::user()->id;
+        $p->user_id = $request['user_id'];
 
         $p->save();
 

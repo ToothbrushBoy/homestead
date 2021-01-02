@@ -27,8 +27,6 @@ Route::get('/posts/create',  [PostController::class, 'create']) -> name('Posts.C
 
 Route::get('/posts/{post}', [PostController::class, 'showPost']) -> name('Posts.Show')->middleware('auth');
 
-Route::get('/posts/create',  [PostController::class, 'create']) -> name('Posts.Create')->middleware('auth');
-
 Route::get('/users', [UserController::class, 'listUsers']) -> name('Users.List')->middleware('auth');
 
 Route::get('/users/{user}', [UserController::class, 'showUser']) -> name('Users.Show')->middleware('auth');

@@ -25,3 +25,5 @@ Route::get('posts', [PostController::class, 'apiListPosts'])->name('api.posts.in
 Route::post('posts', [PostController::class, 'apiStore'])->name('api.posts.store');
 
 Route::get('/comments/{post}', [CommentController::class, 'apiComments'])->name('api.comments.list');
+
+Route::post('/comments', [CommentController::class, 'apiStore'])->name('api.comments.store');
