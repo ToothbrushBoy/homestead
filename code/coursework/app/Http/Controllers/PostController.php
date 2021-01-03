@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
 use App\Cats;
 
@@ -19,17 +21,6 @@ class PostController extends Controller
     {
         $user = Auth::user();
         return view('forum.createPost', ['user' => $user , 'cat' => $c->getCat()]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -88,7 +79,8 @@ class PostController extends Controller
             'postContent' => 'required|max:2000|string',
             'score' => 'required|min:1|max:10|integer',
             'user_id' => 'required|integer',
-            'cat' => 'required|String|max:255'
+            'cat' => 'required|String|max:255',
+            'catFile' => 'file',
         ]);
 
         $p = new Post;
@@ -96,10 +88,22 @@ class PostController extends Controller
         $p->postContent = $request['postContent'];
         $p->score = $request['score'];
         $p->user_id = $request['user_id'];
-        $p->cat = $request['cat'];
+        if ($request['ownCat'] == 0){
+            $p->cat = $request['cat'];
+        } else {
+            $p->cat = Storage::putFile('cats', $request['catFile'], 'public');
+        }
 
         $p->save();
 
         return $p;
+    }
+
+    public function apiStoreCat(Request $request){
+        $requestCat = $request['catFile'];
+
+        $cat = Storage::putFile('cats', $requestCat, 'public');
+
+        return $cat;
     }
 }
