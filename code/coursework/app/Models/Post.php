@@ -10,7 +10,7 @@ class Post extends Model
     use HasFactory;
 
     public function comments() {
-        return $this->hasMany('App\Models\Comment');
+        return $this->morphMany('App\Models\Comment', 'commentable');
     }
 
     public function user() {

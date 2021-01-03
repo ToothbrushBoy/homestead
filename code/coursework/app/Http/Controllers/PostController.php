@@ -85,7 +85,7 @@ class PostController extends Controller
 
         $validated = $request->validate([
             'postTitle' => 'required|min:4|max:40|string',
-            'postContent' => 'required|max:255|string',
+            'postContent' => 'required|max:2000|string',
             'score' => 'required|min:1|max:10|integer',
             'user_id' => 'required|integer',
             'cat' => 'required|String|max:255'

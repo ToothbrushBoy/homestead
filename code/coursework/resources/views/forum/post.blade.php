@@ -14,9 +14,9 @@
 
 @section('commentBox')
 
-<input v-model="newCommentContent" placeholder="Comment" max="255">
+<input v-model="newCommentContent" placeholder="Comment" max="512">
 
-<div v-if="newCommentContent.length >= 1 && newCommentContent.length <= 255">
+<div v-if="newCommentContent.length >= 1 && newCommentContent.length <= 512">
     <button @click="makeComment">Post</button>
 </div>
 <div v-else><button disabled>Post</button></div>

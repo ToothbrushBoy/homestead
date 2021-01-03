@@ -32,8 +32,8 @@
     <p>    
         Content:
     </p>
-    <input type= "text" id="title" maxlength="255" placeholder="Content (max 256 cahracters)" v-model="newPostContent" size="45">
-    <div v-if="newPostScore <= 10 && newPostScore >= 1 && newPostTitle.length >= 4 && newPostTitle.length <= 40 && newPostContent.length <= 255">
+    <input type= "text" id="title" maxlength="2000" placeholder="Content (max 2000 cahracters)" v-model="newPostContent" size="45">
+    <div v-if="newPostScore <= 10 && newPostScore >= 1 && newPostTitle.length >= 4 && newPostTitle.length <= 40 && newPostContent.length <= 2000">
         <button @click="makePost">Post</button>
     </div>
     <div v-else><button disabled>Post</button></div>

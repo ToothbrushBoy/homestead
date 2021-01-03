@@ -98,7 +98,7 @@ class CommentController extends Controller
     public function apiStore(Request $request){
 
         $validated = $request->validate([
-            'content' => 'required|max:255|string',
+            'content' => 'required|max:512|string',
             'post_id' => 'required|integer',
             'user_id' => 'required|integer'
         ]);
