@@ -8,6 +8,10 @@
 
 @section('updated', $post->updated_at)
 
+@section('cat')
+<img src="{{ $post->cat }}" style="width:500px">
+@endsection
+
 @section('commentBox')
 
 <input v-model="newCommentContent" placeholder="Comment" max="255">
@@ -38,6 +42,8 @@
 @endsection
 
 @section('content')
+
+    @yield('cat')
 
     <div>{{ $post->postContent }}</div>
 

@@ -4,10 +4,17 @@
 
 @section('user', $user->name)
 
+@section('cat')
+<img src={{ $cat }} style="width:500px">
+@endsection
+
 @section('header')
 
 <h1>@yield('title')</h1>
 <h3>As @yield('user')</h3>
+<h3>Cat to review:</h3>
+
+@yield('cat')
 
 @endsection
 
@@ -45,7 +52,8 @@
             newPostTitle: '',
             newPostScore: '',
             newPostContent: '',
-            newPostUserId: {{ $user->id }}
+            newPostUserId: {{ $user->id }},
+            catUrl: "{{ $cat }}",
         },
         methods: {
             makePost: function(){
@@ -54,7 +62,8 @@
                     postTitle: this.newPostTitle,
                     score: this.newPostScore,
                     postContent: this.newPostContent,
-                    user_id: this.newPostUserId
+                    user_id: this.newPostUserId,
+                    cat: this.catUrl,
                 })
                 .then(response =>  {
                     window.location = "/posts"

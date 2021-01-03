@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
+use App\Cats;
 
 class PostController extends Controller
 {
@@ -14,10 +15,10 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Cats $c)
     {
         $user = Auth::user();
-        return view('forum.createPost', ['user' => $user ]);
+        return view('forum.createPost', ['user' => $user , 'cat' => $c->getCat()]);
     }
 
     /**
@@ -86,7 +87,8 @@ class PostController extends Controller
             'postTitle' => 'required|min:4|max:40|string',
             'postContent' => 'required|max:255|string',
             'score' => 'required|min:1|max:10|integer',
-            'user_id' => 'required|integer'
+            'user_id' => 'required|integer',
+            'cat' => 'required|String|max:255'
         ]);
 
         $p = new Post;
@@ -94,6 +96,7 @@ class PostController extends Controller
         $p->postContent = $request['postContent'];
         $p->score = $request['score'];
         $p->user_id = $request['user_id'];
+        $p->cat = $request['cat'];
 
         $p->save();
 
