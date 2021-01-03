@@ -26,6 +26,14 @@
 
 <div id="root">
 
+    <div>
+
+        @if ($currentUser->id == $comment->user->id || $currentUser->admin == 1)
+            <button @click="deleteComment">Delete</button>
+        @endif
+
+    </div>
+
     @yield('commentBox')
 
     <ul style="list-style-type:none;">
@@ -76,6 +84,12 @@
                     console.log(response);
                 })
 
+            },
+            deleteComment: function(){
+                axios.delete("{{ route('Comments.Destroy', $comment->id) }}")
+                .then( response => {
+                    window.location = "/posts";
+                })
             }
         },
         mounted(){

@@ -82,16 +82,10 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $commentableParent, $parentType)
+    public function destroyComment($id)
     {
         $comment = Comment::findOrFail($id);
         $comment->delete();
-
-        if ($parentType === "App\Models\Post")  {
-            return redirect()->route('Posts.show', $commentableParent);
-        } else {
-            return redirect()->route('Posts.show', $commentableParent);
-        }
     }
 
     public function apiComments($parent_type, $parent_id){

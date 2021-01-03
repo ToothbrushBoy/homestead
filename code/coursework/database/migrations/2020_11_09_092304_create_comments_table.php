@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->text('content');
             $table->timestamps();
-            $table->morphs('comment');
+            $table->morphs('comment')->onDelete('cascade')->onUpdate('cascade');
 
 
             

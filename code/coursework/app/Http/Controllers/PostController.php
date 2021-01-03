@@ -52,9 +52,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyPost($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
     }
 
     public function listPosts(){
@@ -80,7 +81,7 @@ class PostController extends Controller
             'score' => 'required|min:1|max:10|integer',
             'user_id' => 'required|integer',
             'cat' => 'required|String|max:255',
-            'catFile' => 'file',
+            'catFile' => 'File',
         ]);
 
         $p = new Post;
@@ -91,7 +92,7 @@ class PostController extends Controller
         if ($request['ownCat'] == 0){
             $p->cat = $request['cat'];
         } else {
-            $p->cat = Storage::putFile('cats', $request['catFile'], 'public');
+            $p->cat = Storage::putFile('cats', file_get_contents($request['catFile']), 'public');
         }
 
         $p->save();

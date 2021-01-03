@@ -27,13 +27,17 @@ Route::redirect('/', '/home', 301);
 
 Route::get('/home', [HomeController::class, 'homeView'])->name('home');
 
-Route::get('/posts', [PostController::class, 'listPosts']) -> name('Posts.List')->middleware('auth');
+Route::get('/posts', [PostController::class, 'listPosts']) -> name('Posts.List');
 
 Route::get('/posts/create',  [PostController::class, 'create']) -> name('Posts.Create')->middleware('auth');
 
-Route::get('/posts/{post}', [PostController::class, 'showPost']) -> name('Posts.Show')->middleware('auth');
+Route::get('/posts/{post}', [PostController::class, 'showPost']) -> name('Posts.Show');
 
-Route::get('/comments/{comment}', [CommentController::class, 'showComment']) -> name('Comments.Show')->middleware('auth');
+Route::delete('/posts/{post}', [PostController::class, 'destroyPost']) -> name('Posts.Destroy');
+
+Route::get('/comments/{comment}', [CommentController::class, 'showComment']) -> name('Comments.Show');
+
+Route::delete('/comments/{comment}', [CommentController::class, 'destroyComment']) -> name('Comments.Destroy');
 
 Route::get('/users', [UserController::class, 'listUsers']) -> name('Users.List')->middleware('auth');
 

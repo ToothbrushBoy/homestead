@@ -12,10 +12,8 @@
 </div>
 <div v-else>
     <button @click="ownCatToggle">Use provided cat?</button>
-    <p>
-        <template>
-            <input type="file" @change="handleCat">
-          </template>
+    <p><input type="file" @change="handleCat"></p>
+        
 
 </div>
 @endsection
@@ -32,6 +30,7 @@
 
 <div id="root">
 
+    
     <div>
         <h3>Cat to review:</h3>
         
