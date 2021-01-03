@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Cats;
 
 class PostTableSeeder extends Seeder
 {
@@ -11,8 +12,8 @@ class PostTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Cats $c)
     {
-        'App\Models\Post'::factory()->count(20)->create();
+        'App\Models\Post'::factory()->count(20)->create(['cat' => $c->getCat()]);
     }
 }

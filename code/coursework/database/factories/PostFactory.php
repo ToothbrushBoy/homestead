@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Cats;
 
 class PostFactory extends Factory
 {
@@ -13,6 +14,7 @@ class PostFactory extends Factory
      * @var string
      */
     protected $model = Post::class;
+
 
     /**
      * Define the model's default state.
@@ -26,6 +28,7 @@ class PostFactory extends Factory
             'postTitle' => $this->faker->realText($maxNbChars = 40, $indexSize = 2),
             'postContent' => $this->faker->realText($maxNbChars = 256, $indexSize = 2),
             'score' => $this->faker->numberBetween(1,10),
+            'cat' => route('api.cats.get'),
         ];
     }
 }

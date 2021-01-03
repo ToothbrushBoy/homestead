@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
+use App\Cats;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +17,14 @@ use App\Http\Controllers\UserController;
 |
 */
 
+app()->singleton('Cats', function ($app) {
+    return new Cats();
+});
+app()->make('Cats');
+
 Route::redirect('/', '/home', 301);
 
-Route::get('/home', function () {
-    return view('forum.home');
-});
+Route::get('/home', [HomeController::class, 'homeView'])->name('home');
 
 Route::get('/posts', [PostController::class, 'listPosts']) -> name('Posts.List')->middleware('auth');
 
