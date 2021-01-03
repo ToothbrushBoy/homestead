@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -45,9 +46,11 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showComment($id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        
+        return view('forum.commentDetails', ['comment' => $comment, 'currentUser' => Auth::user()]);
     }
 
     /**
@@ -84,11 +87,15 @@ class CommentController extends Controller
         $comment = Comment::findOrFail($id);
         $comment->delete();
 
-        return redirect()->route('Posts.show', $commentableParent);
+        if ($parentType === "App\Models\Post")  {
+            return redirect()->route('Posts.show', $commentableParent);
+        } else {
+            return redirect()->route('Posts.show', $commentableParent);
+        }
     }
 
-    public function apiComments($post){
-        $comments = Comment::all()->where('post_id', '=', $post);
+    public function apiComments($parent_type, $parent_id){
+        $comments = Comment::all()->where('commentable_type', '=', $parent_type)->where('commentable_id', '=', $parent_id);
         foreach($comments as $comment){
             $comment->userName=$comment->User->name;
         }
@@ -99,14 +106,18 @@ class CommentController extends Controller
 
         $validated = $request->validate([
             'content' => 'required|max:512|string',
-            'post_id' => 'required|integer',
-            'user_id' => 'required|integer'
+            'commentable_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            'commentable_type' => "required|string",
+
         ]);
 
         $c = new Comment;
         $c->content = $request['content'];
-        $c->post_id = $request['post_id'];
         $c->user_id = $request['user_id'];
+        $c->commentable_type = $request['commentable_type'];
+        $c->commentable_id = $request['commentable_id'];
+
 
         $c->save();
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CommentController;
 use App\Cats;
 
 /*
@@ -31,6 +32,8 @@ Route::get('/posts', [PostController::class, 'listPosts']) -> name('Posts.List')
 Route::get('/posts/create',  [PostController::class, 'create']) -> name('Posts.Create')->middleware('auth');
 
 Route::get('/posts/{post}', [PostController::class, 'showPost']) -> name('Posts.Show')->middleware('auth');
+
+Route::get('/comments/{comment}', [CommentController::class, 'showComment']) -> name('Comments.Show')->middleware('auth');
 
 Route::get('/users', [UserController::class, 'listUsers']) -> name('Users.List')->middleware('auth');
 

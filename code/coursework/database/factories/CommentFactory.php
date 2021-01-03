@@ -24,8 +24,9 @@ class CommentFactory extends Factory
     {
         return [
             'user_id' => $this->faker->numberBetween(1,10),
-            'post_id' => $this->faker->numberBetween(1,20),
-            'content' => $this->faker->realText($maxNbChars = 350, $indexSize = 2)
+            'commentable_id' => $this->faker->numberBetween(1,20),
+            'content' => $this->faker->realText($maxNbChars = 350, $indexSize = 2),
+            'commentable_type' => "App\Models\Post"
         ];
     }
 }

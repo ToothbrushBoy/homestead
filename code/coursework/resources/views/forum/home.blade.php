@@ -2,7 +2,7 @@
 
 @section('header')
 
-<h1>funny haha review site</h1>
+<h1>Cat reviews</h1>
 <h3><a href="{{ route('Posts.List') }}">All posts</a></h3>
 
 @endsection
@@ -13,7 +13,7 @@
 
     <button @click="toggleCatImg">Cat?</button>
     <div v-if="catToggle === 1">
-        <a href="{{ route('home') }}"><img src="{{route('api.cats.get')}}" style="width:500px"></a>
+        <a href="{{ route('home') }}"><img src="{{ $catUrl }}" style="width:500px"></a>
     </div>
 
 </div>

@@ -59,8 +59,10 @@
 
         <ul style="list-style-type:none;">
             <li v-for="comment in commentsData">
-                <p>@{{ comment.content }}</p>
-                <p>@{{ comment.userName }} at @{{ comment.created_at }}</p>
+                <a v-bind:href="'/comments/' + comment.id">
+                    <p>@{{ comment.content }}</p>
+                    <p>@{{ comment.userName }} at @{{ comment.created_at }}</p>
+                </a>
             </li>
         </ul>
     </div>
@@ -83,11 +85,12 @@
 
                 axios.post("{{ route('api.comments.store') }}", {
                     content: this.newCommentContent,
-                    post_id: this.newCommentCommentableId,
+                    commentable_id: this.newCommentCommentableId,
                     user_id: this.newCommentUser,
+                    commentable_type: 'App\\Models\\Post',
                 })
                 .then(response =>  {
-                    axios.get("{{ route('api.comments.list', $post->id) }}")
+                    axios.get("{{ route('api.comments.list', ['parent_type'=>'App\\Models\\Post', 'parent_id'=>$post->id]) }}")
                     .then( response => {
                         this.commentsData = response.data;
                         this.newCommentContent = '';
@@ -103,7 +106,7 @@
             }
         },
         mounted(){
-            axios.get("{{ route('api.comments.list', $post->id) }}")
+            axios.get("{{ route('api.comments.list', ['parent_type'=>'App\\Models\\Post', 'parent_id'=>$post->id]) }}")
             .then( response => {
                 this.commentsData = response.data;
             })
