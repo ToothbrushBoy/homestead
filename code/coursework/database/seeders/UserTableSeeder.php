@@ -22,6 +22,6 @@ class UserTableSeeder extends Seeder
         $u->password = Hash::make("12345678");
         $u->save();
 
-        'App\Models\User'::factory()->count(9)->create();
+        'App\Models\User'::factory()->count(14)->create();
     }
 }

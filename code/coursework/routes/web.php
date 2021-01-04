@@ -31,11 +31,19 @@ Route::get('/posts', [PostController::class, 'listPosts']) -> name('Posts.List')
 
 Route::get('/posts/create',  [PostController::class, 'create']) -> name('Posts.Create')->middleware('auth');
 
-Route::get('/posts/{post}', [PostController::class, 'showPost']) -> name('Posts.Show');
+Route::get('/posts/{post}', [PostController::class, 'showPost']) -> name('Posts.Show')->middleware('auth');
+
+Route::get('/posts/edit/{post}', [PostController::class, 'edit']) -> name('Posts.Edit')->middleware('auth');
+
+Route::post('/posts/update', [PostController::class, 'update']) -> name('Posts.Update');
 
 Route::delete('/posts/{post}', [PostController::class, 'destroyPost']) -> name('Posts.Destroy');
 
 Route::get('/comments/{comment}', [CommentController::class, 'showComment']) -> name('Comments.Show');
+
+Route::get('/comments/edit/{comment}', [CommentController::class, 'edit']) -> name('Comments.Edit');
+
+Route::post('/comments/update', [CommentController::class, 'update']) -> name('Comments.Update');
 
 Route::delete('/comments/{comment}', [CommentController::class, 'destroyComment']) -> name('Comments.Destroy');
 

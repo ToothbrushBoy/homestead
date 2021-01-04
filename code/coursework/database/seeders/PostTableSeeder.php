@@ -14,6 +14,6 @@ class PostTableSeeder extends Seeder
      */
     public function run(Cats $c)
     {
-        'App\Models\Post'::factory()->count(20)->create(['cat' => $c->getCat()]);
+        'App\Models\Post'::factory()->count(50)->create(['cat' => $c->getCat()]);
     }
 }

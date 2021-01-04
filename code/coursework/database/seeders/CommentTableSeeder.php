@@ -14,6 +14,7 @@ class CommentTableSeeder extends Seeder
      */
     public function run()
     {
-       'App\Models\Comment'::factory()->count(100)->create();
+        'App\Models\Comment'::factory()->count(300)->create();
+        'App\Models\Comment'::factory()->count(100)->create(['commentable_type' => "App\Models\Comment"]);
     }
 }

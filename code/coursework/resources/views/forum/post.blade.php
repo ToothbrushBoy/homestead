@@ -35,7 +35,7 @@
 
 @section('header')
 
-    <h1>@yield('title')</h1>
+    <h1>@yield('title') - {{ $post->score }}/10</h1>
     <h3>By @yield('user')</h3>
     <p>@yield('timeText')</p>
 
@@ -52,6 +52,9 @@
         
         <div>
 
+            @if ($currentUser->id == $post->user->id)
+                <a href="{{ route('Posts.Edit', $post->id) }}"><button>Edit</button></a>
+            @endif
             @if ($currentUser->id == $post->user->id || $currentUser->admin == 1)
                 <button @click="deletePost">Delete</button>
             @endif

@@ -77,7 +77,12 @@
                 this.catFile = event.target.files[0];
             },
             makePost: function(){
-                console.log(this.catFile);
+                console.log(this.newPostTitle);
+                console.log(this.newPostScore);
+                console.log(this.newPostContent);
+                console.log(this.newPostUserId);
+                console.log(this.catUrl);
+                console.log(this.submitOwnCat);
 
                 axios.post("{{ route('api.posts.store') }}", {
                     postTitle: this.newPostTitle,

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +33,12 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $p = Post::findOrFail($id);
+        if ($p->user->id == Auth::user()->id){
+            return view('forum.editPost', ['post' => $p]);
+        } else {
+            return redirect('/');
+        }
     }
 
     /**
@@ -41,9 +48,23 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'postTitle' => 'required|min:4|max:40|string',
+            'postContent' => 'required|max:2000|string',
+            'score' => 'required|min:1|max:10|integer',
+
+        ]);
+
+        $p = Post::findOrFail($request['id']);
+        $p->postTitle = $request['postTitle'];
+        $p->postContent = $request['postContent'];
+        $p->score = $request['score'];
+
+        $p->save();
+
+        return redirect(route('Posts.Show', $p->id));
     }
 
     /**
@@ -59,7 +80,7 @@ class PostController extends Controller
     }
 
     public function listPosts(){
-        $posts = Post::all();
+        $posts = Post::paginate(10);
         return view('forum.postList', ['posts' => $posts]);
     }
 
@@ -81,7 +102,7 @@ class PostController extends Controller
             'score' => 'required|min:1|max:10|integer',
             'user_id' => 'required|integer',
             'cat' => 'required|String|max:255',
-            'catFile' => 'File',
+            'catFile' => 'exclude_if:ownCat,0|File',
         ]);
 
         $p = new Post;
@@ -92,7 +113,6 @@ class PostController extends Controller
         if ($request['ownCat'] == 0){
             $p->cat = $request['cat'];
         } else {
-            $p->cat = Storage::putFile('cats', file_get_contents($request['catFile']), 'public');
         }
 
         $p->save();

@@ -10,32 +10,16 @@
 
 @section('content')
 
-    <div id="postList">
+     <div class="container">
+
         <ul style="list-style-type:none;">
-            <li v-for="post in posts"><a v-bind:href="'/posts/' + post.id">@{{ post.postTitle }}</a></li>
+            @foreach ($posts as $post)
+                <li><a href="{{ route('Posts.Show', $post->id) }}">{{ $post->postTitle }} - {{ $post->score }}/10</a></li>
+            @endforeach
         </ul>
-    </div>
 
-@endsection
+     </div>
 
-@section('script')
-
-<script>
-    var postListVue = new Vue({
-        el: "#postList",
-        data: {
-            posts: [],
-        },
-        mounted(){
-            axios.get("{{ route('api.posts.index') }}")
-            .then( response => {
-                this.posts = response.data;
-            })
-            .catch( response => {
-                console.log(response);
-            })
-        },
-    });
-</script>
+     {{ $posts->links() }}
 
 @endsection

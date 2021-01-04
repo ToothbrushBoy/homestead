@@ -61,7 +61,12 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $c = Comment::findOrFail($id);
+        if ($c->user->id == Auth::user()->id){
+            return view('forum.editComment', ['comment' => $c]);
+        } else {
+            return redirect('/');
+        }
     }
 
     /**
@@ -71,9 +76,18 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'content' => 'required|max:512|string',
+        ]);
+
+        $c = Comment::findOrFail($request['id']);
+        $c->content = $request['content'];
+
+        $c->save();
+
+        return redirect(route('Comments.Show', $c->id));
     }
 
     /**

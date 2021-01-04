@@ -28,6 +28,9 @@
 
     <div>
 
+        @if ($currentUser->id == $comment->user->id)
+            <a href="{{ route('Comments.Edit', $comment->id) }}"><button>Edit</button></a>
+        @endif
         @if ($currentUser->id == $comment->user->id || $currentUser->admin == 1)
             <button @click="deleteComment">Delete</button>
         @endif
