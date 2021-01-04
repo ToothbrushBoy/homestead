@@ -80,7 +80,7 @@ class PostController extends Controller
     }
 
     public function listPosts(){
-        $posts = Post::paginate(10);
+        $posts = Post::paginate(15);
         return view('forum.postList', ['posts' => $posts]);
     }
 
@@ -101,23 +101,21 @@ class PostController extends Controller
             'postContent' => 'required|max:2000|string',
             'score' => 'required|min:1|max:10|integer',
             'user_id' => 'required|integer',
-            'cat' => 'required|String|max:255',
-            'catFile' => 'exclude_if:ownCat,0|File',
         ]);
+        
 
         $p = new Post;
         $p->postTitle = $request['postTitle'];
         $p->postContent = $request['postContent'];
         $p->score = $request['score'];
         $p->user_id = $request['user_id'];
-        if ($request['ownCat'] == 0){
-            $p->cat = $request['cat'];
-        } else {
-        }
+
+        $p->cat = Storage::url(Storage::putFile('public/cats', $request['catFile'], 'public'));        
+        
 
         $p->save();
 
-        return $p;
+        return redirect(route('Posts.Show', $p->id));
     }
 
     public function apiStoreCat(Request $request){
